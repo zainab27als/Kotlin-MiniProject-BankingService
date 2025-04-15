@@ -12,4 +12,8 @@ class UserController(val service: UserService) {
     fun register(@RequestBody dto: RegisterUserDTO): User {
         return service.registerUser(dto.username, dto.password)
     }
+    @GetMapping
+    fun getAllUsers(): List<User> {
+        return service.getAllUsers()
+    }
 }

@@ -16,4 +16,11 @@ class AccountService(val accountRepo: AccountRepository, val userRepo: UserRepos
         val account = accountRepo.findById(accountId).orElseThrow()
         accountRepo.save(account.copy(isActive = false))
     }
+    fun getAccountById(accountId: Long): Account {
+        return accountRepo.findById(accountId).orElseThrow { throw NoSuchElementException("Account not found with ID: $accountId") }
+    }
+
+    fun getAccountByUserId(userId: Long): List<Account> {
+        return accountRepo.findAllByUserId(userId)
+    }
 }

@@ -9,8 +9,7 @@ data class User(
     var id: Long? = null,
 
     @Column(nullable = false)
-var username: String? = null,
-
-@Column(nullable = false)
-var password: String? = null
+    var username: String? = null,
+    @Column(nullable = false)
+    var password: String? = null
 )

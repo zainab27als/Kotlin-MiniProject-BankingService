@@ -18,4 +18,13 @@ class AccountController(val service: AccountService) {
     fun closeAccount(@RequestBody dto: CloseAccountDTO) {
         service.closeAccount(dto.accountId)
     }
+    @GetMapping("/{accountId}")
+    fun getAccountById(@PathVariable accountId: Long): Account {
+        return service.getAccountById(accountId)
+    }
+
+    @GetMapping("/user/{userId}")
+    fun getAccountByUserId(@PathVariable userId: Long): List<Account> {
+        return service.getAccountByUserId(userId)
+    }
 }

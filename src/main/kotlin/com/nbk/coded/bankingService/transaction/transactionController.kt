@@ -13,5 +13,9 @@ class TransactionController(val service: TransactionService) {
     fun transfer(@RequestBody dto: TransferDTO) {
         service.transfer(dto.sourceId, dto.destId, dto.amount)
     }
+    @GetMapping
+    fun getAllTransactions(): List<Transaction> {
+        return service.getAllTransactions()
+    }
 }
 

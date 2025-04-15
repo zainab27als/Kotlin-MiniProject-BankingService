@@ -13,4 +13,6 @@ class KycService(val kycRepo: KycRepository, val userRepo: UserRepository) {
     }
 
     fun getKyc(userId: Long): KYC = kycRepo.findById(userId).orElseThrow()
+
+    fun getAllKyc(): List<KYC> = kycRepo.findAll()
 }

@@ -8,4 +8,7 @@ class UserService(val userRepo: UserRepository) {
         val user = User(username = username, password = password)
         return userRepo.save(user)
     }
+    fun getAllUsers(): List<User> {
+        return userRepo.findAll()
+    }
 }

@@ -18,4 +18,7 @@ class KycController(val service: KycService) {
 
     @GetMapping
     fun getKyc(@RequestParam userId: Long): KYC = service.getKyc(userId)
+
+    @GetMapping("/all")
+    fun getAllKyc(): List<KYC> = service.getAllKyc()
 }

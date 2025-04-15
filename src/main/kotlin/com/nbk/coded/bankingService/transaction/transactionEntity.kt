@@ -12,11 +12,14 @@ data class Transaction(
 
     @ManyToOne
     @JoinColumn(name = "from_account_id")
-    val sourceAccount: Account,
+    val sourceAccount: Account? = null,
 
     @ManyToOne
     @JoinColumn(name = "to_account_id")
-    val destinationAccount: Account,
+    val destinationAccount: Account? = null,
 
-    val amount: BigDecimal
-)
+    val amount: BigDecimal = BigDecimal.ZERO
+){
+
+    constructor() : this(0, null, null, BigDecimal.ZERO)
+}
