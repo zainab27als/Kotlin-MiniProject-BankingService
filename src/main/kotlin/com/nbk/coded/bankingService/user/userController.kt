@@ -3,7 +3,7 @@ package com.nbk.coded.bankingService.user
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/users/v1")
 class UserController(val service: UserService) {
 
     data class RegisterUserDTO(val username: String, val password: String)

@@ -4,18 +4,20 @@ import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
 
 @RestController
-@RequestMapping("/transactions")
+@RequestMapping("/accounts/v1/accounts/transfer")
 class TransactionController(val service: TransactionService) {
 
-    data class TransferDTO(val sourceId: Long, val destId: Long, val amount: BigDecimal)
+    data class TransferDTO(val sourceAccountNumber: String, val destinationAccountNumber: String, val amount: BigDecimal)
 
-    @PostMapping("/transfer")
+    @PostMapping
     fun transfer(@RequestBody dto: TransferDTO) {
-        service.transfer(dto.sourceId, dto.destId, dto.amount)
+        service.transfer(dto.sourceAccountNumber, dto.destinationAccountNumber, dto.amount)
     }
+
     @GetMapping
     fun getAllTransactions(): List<Transaction> {
         return service.getAllTransactions()
     }
 }
+
 

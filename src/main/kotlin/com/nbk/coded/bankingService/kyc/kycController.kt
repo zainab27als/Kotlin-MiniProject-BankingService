@@ -5,20 +5,21 @@ import java.math.BigDecimal
 import java.time.LocalDate
 
 @RestController
-@RequestMapping("/kyc")
+@RequestMapping("/users/v1/kyc")
 class KycController(val service: KycService) {
 
     data class KycDTO(val userId: Long, val dob: String, val nationality: String, val salary: BigDecimal)
 
-    @PostMapping("/update")
-    fun updateKyc(@RequestBody dto: KycDTO): KYC {
+    @PostMapping
+    fun createOrUpdateKyc(@RequestBody dto: KycDTO): KYC {
         val date = LocalDate.parse(dto.dob)
         return service.createOrUpdateKyc(dto.userId, date, dto.nationality, dto.salary)
     }
 
-    @GetMapping
-    fun getKyc(@RequestParam userId: Long): KYC = service.getKyc(userId)
+    @GetMapping("/{userId}")
+    fun getKyc(@PathVariable userId: Long): KYC = service.getKyc(userId)
 
     @GetMapping("/all")
     fun getAllKyc(): List<KYC> = service.getAllKyc()
 }
+

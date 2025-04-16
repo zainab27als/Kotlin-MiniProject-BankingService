@@ -10,23 +10,21 @@ class TransactionService(
     val txRepo: TransactionRepository
 ) {
 
-    fun transfer(sourceId: Long, destId: Long, amount: BigDecimal) {
+    fun transfer(sourceAccountNumber: String, destinationAccountNumber: String, amount: BigDecimal) {
         try {
-            val source = accountRepo.findById(sourceId).orElseThrow {
-                throw IllegalArgumentException("Source account not found with ID: $sourceId")
-            }
-            val dest = accountRepo.findById(destId).orElseThrow {
-                throw IllegalArgumentException("Destination account not found with ID: $destId")
-            }
+            val source = accountRepo.findAll().find { it.accountNumber == sourceAccountNumber }
+                ?: throw IllegalArgumentException("Source account not found with number: $sourceAccountNumber")
+            val destination = accountRepo.findAll().find { it.accountNumber == destinationAccountNumber }
+                ?: throw IllegalArgumentException("Destination account not found with number: $destinationAccountNumber")
 
             require(source.balance >= amount) { "Insufficient balance in source account" }
 
             val updatedSource = source.copy(balance = source.balance - amount)
-            val updatedDest = dest.copy(balance = dest.balance + amount)
+            val updatedDestination = destination.copy(balance = destination.balance + amount)
 
-            accountRepo.saveAll(listOf(updatedSource, updatedDest))
+            accountRepo.saveAll(listOf(updatedSource, updatedDestination))
 
-            val tx = Transaction(sourceAccount = updatedSource, destinationAccount = updatedDest, amount = amount)
+            val tx = Transaction(sourceAccount = updatedSource, destinationAccount = updatedDestination, amount = amount)
             txRepo.save(tx)
 
         } catch (e: Exception) {
