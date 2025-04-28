@@ -1,5 +1,6 @@
 package com.nbk.coded.bankingService.kyc
 
+import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
 import java.time.LocalDate
@@ -11,6 +12,7 @@ class KycController(val service: KycService) {
     data class KycDTO(val userId: Long, val dob: String, val nationality: String, val salary: BigDecimal)
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     fun createOrUpdateKyc(@RequestBody dto: KycDTO): KYC {
         val date = LocalDate.parse(dto.dob)
         return service.createOrUpdateKyc(dto.userId, date, dto.nationality, dto.salary)
